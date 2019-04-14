@@ -66,8 +66,7 @@ public class JadxProject {
 	private void changed() {
 		if (settings.isAutoSaveProject()) {
 			save();
-		}
-		else {
+		} else {
 			saved = false;
 		}
 		initial = false;

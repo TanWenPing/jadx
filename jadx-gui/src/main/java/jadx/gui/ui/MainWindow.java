@@ -1,7 +1,5 @@
 package jadx.gui.ui;
 
-import static javax.swing.KeyStroke.getKeyStroke;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.DisplayMode;
@@ -90,6 +88,8 @@ import jadx.gui.utils.JumpPosition;
 import jadx.gui.utils.Link;
 import jadx.gui.utils.NLS;
 import jadx.gui.utils.Utils;
+
+import static javax.swing.KeyStroke.getKeyStroke;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
@@ -197,7 +197,7 @@ public class MainWindow extends JFrame {
 	public void openFileOrProject() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setAcceptAllFileFilterUsed(true);
-		String[] exts = {JadxProject.PROJECT_EXTENSION, "apk", "dex", "jar", "class", "zip", "aar", "arsc", "smali"};
+		String[] exts = { JadxProject.PROJECT_EXTENSION, "apk", "dex", "jar", "class", "smali", "zip", "aar", "arsc" };
 		String description = "supported files: " + Arrays.toString(exts).replace('[', '(').replace(']', ')');
 		fileChooser.setFileFilter(new FileNameExtensionFilter(description, exts));
 		fileChooser.setToolTipText(NLS.str("file.open_action"));
@@ -232,8 +232,7 @@ public class MainWindow extends JFrame {
 	private void saveProject() {
 		if (project.getProjectPath() == null) {
 			saveProjectAs();
-		}
-		else {
+		} else {
 			project.save();
 			update();
 		}
@@ -242,7 +241,7 @@ public class MainWindow extends JFrame {
 	private void saveProjectAs() {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setAcceptAllFileFilterUsed(true);
-		String[] exts = {JadxProject.PROJECT_EXTENSION};
+		String[] exts = { JadxProject.PROJECT_EXTENSION };
 		String description = "supported files: " + Arrays.toString(exts).replace('[', '(').replace(']', ')');
 		fileChooser.setFileFilter(new FileNameExtensionFilter(description, exts));
 		fileChooser.setToolTipText(NLS.str("file.save_project"));
@@ -278,8 +277,7 @@ public class MainWindow extends JFrame {
 		if (path.getFileName().toString().toLowerCase(Locale.ROOT)
 				.endsWith(JadxProject.PROJECT_EXTENSION)) {
 			openProject(path);
-		}
-		else {
+		} else {
 			project.setFilePath(path);
 			tabbedPane.closeAllTabs();
 			resetCache();
@@ -318,8 +316,7 @@ public class MainWindow extends JFrame {
 					this,
 					NLS.str("msg.project_error"),
 					NLS.str("msg.project_error_title"),
-					JOptionPane.INFORMATION_MESSAGE
-			);
+					JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		update();
@@ -327,8 +324,7 @@ public class MainWindow extends JFrame {
 		Path filePath = project.getFilePath();
 		if (filePath == null) {
 			clearTree();
-		}
-		else {
+		} else {
 			open(filePath);
 		}
 	}
@@ -341,8 +337,7 @@ public class MainWindow extends JFrame {
 		String pathString;
 		if (projectPath == null) {
 			pathString = "";
-		}
-		else {
+		} else {
 			pathString = " [" + projectPath.getParent().toAbsolutePath() + ']';
 		}
 		setTitle((project.isSaved() ? "" : '*')
@@ -394,8 +389,7 @@ public class MainWindow extends JFrame {
 					this,
 					NLS.str("msg.rename_disabled", settings.getLangLocale()),
 					NLS.str("msg.rename_disabled_title", settings.getLangLocale()),
-					JOptionPane.INFORMATION_MESSAGE
-			);
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -804,8 +798,8 @@ public class MainWindow extends JFrame {
 		tree.setCellRenderer(new DefaultTreeCellRenderer() {
 			@Override
 			public Component getTreeCellRendererComponent(JTree tree,
-			                                              Object value, boolean selected, boolean expanded,
-			                                              boolean isLeaf, int row, boolean focused) {
+					Object value, boolean selected, boolean expanded,
+					boolean isLeaf, int row, boolean focused) {
 				Component c = super.getTreeCellRendererComponent(tree, value, selected, expanded, isLeaf, row, focused);
 				if (value instanceof JNode) {
 					setIcon(((JNode) value).getIcon());

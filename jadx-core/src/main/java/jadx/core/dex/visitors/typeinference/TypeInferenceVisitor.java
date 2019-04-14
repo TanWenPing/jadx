@@ -41,12 +41,12 @@ import jadx.core.utils.BlockUtils;
 import jadx.core.utils.Utils;
 
 @JadxVisitor(
-	name = "Type Inference",
-	desc = "Calculate best types for SSA variables",
-	runAfter = {
-		SSATransform.class,
-		ConstInlineVisitor.class
-	}
+		name = "Type Inference",
+		desc = "Calculate best types for SSA variables",
+		runAfter = {
+				SSATransform.class,
+				ConstInlineVisitor.class
+		}
 )
 public final class TypeInferenceVisitor extends AbstractVisitor {
 	private static final Logger LOG = LoggerFactory.getLogger(TypeInferenceVisitor.class);
@@ -76,8 +76,8 @@ public final class TypeInferenceVisitor extends AbstractVisitor {
 		for (SSAVar var : mth.getSVars()) {
 			ArgType type = var.getTypeInfo().getType();
 			if (!type.isTypeKnown()
-				    && !var.getAssign().isTypeImmutable()
-				    && !tryDeduceType(mth, var, type)) {
+					&& !var.getAssign().isTypeImmutable()
+					&& !tryDeduceType(mth, var, type)) {
 				resolved = false;
 			}
 		}
@@ -101,7 +101,7 @@ public final class TypeInferenceVisitor extends AbstractVisitor {
 		}
 		long time = System.currentTimeMillis() - startTime;
 		mth.addComment("JADX DEBUG: Multi-variable type inference result: " + (success ? "success" : "failure")
-			               + ", time: " + time + " ms");
+				+ ", time: " + time + " ms");
 	}
 
 	private boolean setImmutableType(SSAVar ssaVar) {
@@ -178,9 +178,9 @@ public final class TypeInferenceVisitor extends AbstractVisitor {
 
 	private Optional<ArgType> selectBestTypeFromBounds(Set<ITypeBound> bounds) {
 		return bounds.stream()
-			       .map(ITypeBound::getType)
-			       .filter(Objects::nonNull)
-			       .max(typeUpdate.getArgTypeComparator());
+				.map(ITypeBound::getType)
+				.filter(Objects::nonNull)
+				.max(typeUpdate.getArgTypeComparator());
 	}
 
 	private void attachBounds(SSAVar var) {

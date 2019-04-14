@@ -1,7 +1,6 @@
 package jadx.core.dex.visitors.regions.variables;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,7 +44,8 @@ public class ProcessVariables extends AbstractVisitor {
 			return;
 		}
 		checkCodeVars(mth, codeVars);
-		// TODO: reduce code vars by name if debug info applied. Need checks for variable scopes before reduce
+		// TODO: reduce code vars by name if debug info applied. Need checks for variable scopes before
+		// reduce
 
 		// collect all variables usage
 		CollectUsageRegionVisitor usageCollector = new CollectUsageRegionVisitor();
@@ -234,34 +234,7 @@ public class ProcessVariables extends AbstractVisitor {
 	}
 
 	private boolean searchDeclareRegion(VarUsage u, CodeVar codeVar) {
-		/*
-		Set<IRegion> set = u.getUseRegions();
-		for (Iterator<IRegion> it = set.iterator(); it.hasNext(); ) {
-			IRegion r = it.next();
-			IRegion parent = r.getParent();
-			if (parent != null && set.contains(parent)) {
-				it.remove();
-			}
-		}
-		IRegion region = null;
-		if (!set.isEmpty()) {
-			region = set.iterator().next();
-		} else if (!u.getAssigns().isEmpty()) {
-			region = u.getAssigns().iterator().next();
-		}
-		if (region == null) {
-			return false;
-		}
-		IRegion parent = region;
-		while (parent != null) {
-			if (canDeclareAt(u, region)) {
-				declareVarInRegion(region, codeVar);
-				return true;
-			}
-			region = parent;
-			parent = region.getParent();
-		}
-		*/
+		// TODO: place declaration in smaller scope as possible
 		return false;
 	}
 
@@ -277,31 +250,5 @@ public class ProcessVariables extends AbstractVisitor {
 		}
 		dv.addVar(var);
 		var.setDeclared(true);
-	}
-
-	private static boolean isAllRegionsAfter(IRegion region, Set<IRegion> others) {
-		IRegion parent = region.getParent();
-		if (parent == null) {
-			return true;
-		}
-		// lazy init for
-		int regionIndex = -2;
-		List<IContainer> subBlocks = Collections.emptyList();
-		for (IRegion r : others) {
-			if (parent == r.getParent()) {
-				// on same level, check order by index
-				if (regionIndex == -2) {
-					subBlocks = parent.getSubBlocks();
-					regionIndex = subBlocks.indexOf(region);
-				}
-				int rIndex = subBlocks.indexOf(r);
-				if (regionIndex > rIndex) {
-					return false;
-				}
-			} else if (!RegionUtils.isRegionContainsRegion(region, r)) {
-				return false;
-			}
-		}
-		return true;
 	}
 }

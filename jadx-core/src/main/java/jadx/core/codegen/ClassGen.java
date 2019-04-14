@@ -161,7 +161,7 @@ public class ClassGen {
 			} else {
 				clsCode.add("implements ");
 			}
-			for (Iterator<ArgType> it = cls.getInterfaces().iterator(); it.hasNext(); ) {
+			for (Iterator<ArgType> it = cls.getInterfaces().iterator(); it.hasNext();) {
 				ArgType interf = it.next();
 				useClass(clsCode, interf);
 				if (it.hasNext()) {
@@ -193,7 +193,7 @@ public class ClassGen {
 			}
 			if (list != null && !list.isEmpty()) {
 				code.add(" extends ");
-				for (Iterator<ArgType> it = list.iterator(); it.hasNext(); ) {
+				for (Iterator<ArgType> it = list.iterator(); it.hasNext();) {
 					ArgType g = it.next();
 					if (g.isGenericType()) {
 						code.add(g.getObject());
@@ -400,7 +400,7 @@ public class ClassGen {
 			return;
 		}
 		InsnGen igen = null;
-		for (Iterator<EnumField> it = enumFields.getFields().iterator(); it.hasNext(); ) {
+		for (Iterator<EnumField> it = enumFields.getFields().iterator(); it.hasNext();) {
 			EnumField f = it.next();
 			code.startLine(f.getField().getAlias());
 			ConstructorInsn constrInsn = f.getConstrInsn();

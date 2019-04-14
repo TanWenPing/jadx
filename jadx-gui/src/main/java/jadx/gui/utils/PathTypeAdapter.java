@@ -9,7 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-public class PathTypeAdapter  {
+public class PathTypeAdapter {
 
 	private static TypeAdapter<Path> SINGLETON;
 
@@ -29,8 +29,8 @@ public class PathTypeAdapter  {
 				@Override
 				public Path read(JsonReader in) throws IOException {
 					if (in.peek() == JsonToken.NULL) {
-				         in.nextNull();
-				         return null;
+						in.nextNull();
+						return null;
 					}
 					return Paths.get(in.nextString());
 				}
